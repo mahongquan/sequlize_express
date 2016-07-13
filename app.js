@@ -1,3 +1,4 @@
+var swig = require('swig');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -11,9 +12,10 @@ var contacts  = require('./routes/contacts');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
+app.engine('html', swig.renderFile);
+app.set('views', path.join(__dirname, 'templates'));
+//app.set('view engine', 'jade');
+app.set('view engine', 'html');
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
