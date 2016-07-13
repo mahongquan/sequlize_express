@@ -12,5 +12,12 @@ router.get('/', function(req, res) {
     });
   });
 });
-
+router.get('/parts', function(req, res) {
+  models.Contact.findAll().then(function(contacts) {
+    res.render('index_contact', {
+      title: 'Express',
+      contacts: contacts
+    });
+  });
+});
 module.exports = router;
