@@ -16,6 +16,7 @@ module.exports = function(sequelize, DataTypes) {
      ct:DataTypes.INTEGER,//=models.CharField(max_length=30,verbose_name="仪器型号",choices=ACHOICE)#仪器型号
      danwei:DataTypes.STRING,//=models.CharField(max_length=30,verbose_name="仪器编号")#仪器编号
      beizhu:DataTypes.STRING,// =  models.CharField(max_length=30,verbose_name="包箱")#包箱
+     image:DataTypes.STRING
   }, {
     // classMethods: {
     //   associate: function(models) {
