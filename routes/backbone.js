@@ -2,13 +2,8 @@ var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
 router.get('/', function(req, res) {
-  models.Contact.findAll().then(function(contacts) {
-    // var r="";
-    // for(var i in contacts){
-
-    // }
-    res.json(contacts);
-  });
+  res.render('rest/backbone', {
+    });
 });
 router.post('/create', function(req, res) {
   models.Contact.create({
