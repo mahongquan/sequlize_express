@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
     //     User.hasMany(models.Task)
     //   }
     // },
-    //timestamps: false,
+    timestamps: false,
     tableName: 'parts_contact'
   });
 
