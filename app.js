@@ -24,8 +24,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/index'));
 app.use('/parts/items', require('./routes/items'));
+app.use('/rest/Item', require('./routes/items2'));
 app.use('/rest/Contact', require('./routes/contacts'));
+app.use('/rest/UsePack', require('./routes/usepacks'));
 app.use('/rest/Backbone', require('./routes/backbone'));
+app.use('/rest/Pack', require('./routes/packs'));
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;

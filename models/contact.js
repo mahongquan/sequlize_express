@@ -17,11 +17,13 @@ module.exports = function(sequelize, DataTypes) {
     // is_active: DataTypes.BOOLEAN,
     // date_joined: DataTypes.DATE
   }, {
-    // classMethods: {
-    //   associate: function(models) {
-    //     User.hasMany(models.Task)
-    //   }
-    // },
+    classMethods: {
+      associate: function(models) {
+        Contact.hasMany(models.UsePack,{
+              foreignKey: 'contact_id',
+        })
+      }
+    },
     timestamps: false,
     tableName: 'parts_contact'
   });

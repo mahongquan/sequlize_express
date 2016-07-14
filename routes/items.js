@@ -16,43 +16,33 @@ router.get('/', function(req, res) {
       pageinfo:pageinfo
     });
   });
-});
-router.post('/create', function(req, res) {
-  models.Contact.create({
+});//query
+router.post('/', function(req, res) {
+  models.Item.create({
     yonghu: req.body.yonghu
   }).then(function() {
     res.redirect('/parts');
   });
-});
+});//create
 
-router.get('/:contact_id/destroy', function(req, res) {
-  models.Contact.destroy({
+router.put('/', function(req, res) {
+  models.Item.destroy({
     where: {
       id: req.params.contact_id
     }
   }).then(function() {
     res.redirect('/parts');
   });
-});
+});//update
 
-router.post('/:contact_id/tasks/create', function (req, res) {
+router.delete('/', function (req, res) {
   models.Task.create({
     title: req.body.title,
     ContactId: req.params.contact_id
   }).then(function() {
     res.redirect('/parts');
   });
-});
-
-router.get('/:contact_id/tasks/:task_id/destroy', function (req, res) {
-  models.Task.destroy({
-    where: {
-      id: req.params.task_id
-    }
-  }).then(function() {
-    res.redirect('/parts');
-  });
-});
-
+});//delete
 
 module.exports = router;
+
