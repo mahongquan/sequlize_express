@@ -372,7 +372,7 @@ function delCookie(name)//删除cookie
     events: {
       "click .contact_edit" : "edit",
       "click .contact_delete" : "delete",
-      "click .contact_usepack" : "usepack",
+      //"click .contact_usepack" : "usepack",
       "click .contact_zxd" : "zxd",
       "click .contact_zs" : "zs",
       "click .contact_detail" : "detail",
@@ -385,49 +385,6 @@ function delCookie(name)//删除cookie
     },
     zs:function(){
         window.open("/parts/tar?id="+this.model.get("id"));
-    },
-    usepack:function(){
-           var usepackListView = new UsepackListView({model:this.model});
-           //usepackListView.render();
-           usepackListView.$el.dialog({
-                width:500,//height:500,
-                modal: true
-                , overlay: {
-                    backgroundColor: '#000'
-                    , opacity: 0.5
-                }
-                , autoOpen: true,
-                close: function (event,ui) {
-                   $(this).dialog("destroy");
-                }
-           });
-           usepackListView.$("#auto_pack1").autocomplete({
-                minLength: 1
-                , focus: function (event, ui) {
-                    //$( "#auto_pack1" ).val( ui.item.value);
-                    return false;
-                }
-                , select: function (event, ui) {
-                    usepackListView.addrow(ui.item.pk, ui.item.value);
-                    return false;
-                }
-                , source: function (request, response) {
-                    var term = request.term;
-                    if (term in cache) {
-                        data = cache[term];
-                        response(data);
-                        return;
-                    }
-                    $.getJSON("/admin/lookups/ajax_lookup/pack", request, function (data, status, xhr) {
-                        cache[term] = data;
-                        response(data);
-                    });
-                }
-            }).autocomplete("instance")._renderItem = function (ul, item) {
-                return $("<li>")
-                    .append("<a>" + item.pk + "_" + item.value + "</a>")
-                    .appendTo(ul);
-            };
     },
     edit:function(){
         //console.log("edit");
@@ -542,24 +499,25 @@ function delCookie(name)//删除cookie
                     return false;
                 }
                 , select: function (event, ui) {
-                    self.pev.addrow(ui.item.pk, ui.item.value);
+                    self.pev.addrow(ui.item.id, ui.item.name);
                     return false;
                 }
                 , source: function (request, response) {
                     var term = request.term;
+                    request={ search: term };
                     if (term in cache) {
                         data = cache[term];
                         response(data);
                         return;
                     }
-                    $.getJSON("/admin/lookups/ajax_lookup/pack", request, function (data, status, xhr) {
-                        cache[term] = data;
-                        response(data);
+                    $.getJSON("/rest/Pack", request, function (data, status, xhr) {
+                        cache[term] = data.data;
+                        response(data.data);
                     });
                 }
             }).autocomplete("instance")._renderItem = function (ul, item) {
                 return $("<li>")
-                    .append("<a>" + item.pk + "_" + item.value + "</a>")
+                    .append("<a>" + item.id + "_" + item.name + "</a>")
                     .appendTo(ul);
             }; 
 
@@ -1443,7 +1401,7 @@ function delCookie(name)//删除cookie
       <table  class="table-bordered"  width="600px">
     　<thead>
     　　<tr>
-    　　　<td>ID</td><td>包名称</td><td >合同</td><td >包</td><td >合同号</td><td>操作</td>
+    　　　<td>ID</td><td>包名称</td><td >合同</td><td >包</td><td hidden="true">合同号</td><td>操作</td>
     　　</tr>
    　</thead> 
       <tbody id="usepack-list">
@@ -1456,7 +1414,7 @@ function delCookie(name)//删除cookie
   </div>
   </script>
   <script type="text/template" id="usepack-template">
-    　　　<td><%- id %></td><td><%- Pack.name %></td><td ><%- contact_id %></td><td ><%- pack_id %></td><td ><%- hetongbh %></td><td><button class="usepack_edit">编辑</button><button  class="usepack_delete" >删除</button></td>
+    　　　<td><%- id %></td><td><%- Pack.name %></td><td ><%- contact_id %></td><td ><%- pack_id %></td><td hidden="true" ><%- hetongbh %></td><td><button class="usepack_edit">编辑</button><button  class="usepack_delete" >删除</button></td>
   </script>
 <script type="text/template" id="packitem-list-template">
   <div class="container">
@@ -1502,7 +1460,7 @@ function delCookie(name)//删除cookie
                     <label>备件id:</label>
                 </td>
                 <td>
-                    <input type="text" id="itemid" name="itemid" readonly="true"      value="<%- itemid %>">
+                    <input type="text" id="itemid" name="itemid" readonly="true"      value="<%- Item.id %>">
                 </td>
             </tr>
             <tr>
@@ -1510,7 +1468,7 @@ function delCookie(name)//删除cookie
                     <label>编号:</label>
                 </td>
                 <td>
-                    <input type="text" id="bh" name="bh" value="<%- bh %>">
+                    <input type="text" id="bh" name="bh" value="<%- Item.bh %>">
                 </td>
             </tr>       
             <tr>
@@ -1518,7 +1476,7 @@ function delCookie(name)//删除cookie
                     <label>名称:</label>
                 </td>
                 <td>
-                    <input type="text" id="name" name="name" value="<%- name %>">
+                    <input type="text" id="name" name="name" value="<%- Item.name %>">
                 </td>
             </tr>        
             <tr>
@@ -1526,7 +1484,7 @@ function delCookie(name)//删除cookie
                     <label>规格:</label>
                 </td>
                 <td>
-                    <input type="text" id="guige" name="guige" value="<%- guige %>">
+                    <input type="text" id="guige" name="guige" value="<%- Item.guige %>">
                 </td>
             </tr>        
             <tr>
@@ -1534,7 +1492,7 @@ function delCookie(name)//删除cookie
                     <label>单位:</label>
                 </td>
                 <td>
-                    <input type="text" id="danwei" name="danwei" value="<%- danwei %>">
+                    <input type="text" id="danwei" name="danwei" value="<%- Item.danwei %>">
                 </td>
             </tr>        
             <tr>
