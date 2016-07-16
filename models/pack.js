@@ -8,7 +8,10 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         Pack.hasMany(models.UsePack,{
               foreignKey: 'pack_id',
-        })
+        });
+        Pack.hasMany(models.PackItem,{
+              foreignKey: 'pack_id',
+        });
       }
     },
     timestamps: false,
