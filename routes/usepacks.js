@@ -15,6 +15,9 @@ models.UsePack.findAll({
       console.log("total="+total);          
       models.UsePack.findAll({
         where: w,
+        include: [{
+                  model: models.Pack,
+             }] ,
       }
       ).then(function(contacts) {
         if(contacts.length>0){

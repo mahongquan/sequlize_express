@@ -1433,6 +1433,7 @@ function delCookie(name)//删除cookie
   </script>
   <script type="text/template" id="usepack-list-template">
   <div class="container">
+     <p>usepack list </p>
       <!-- div id="contact-info">
        <table>
       <tr><td>id：</td><td><%- id %></td></tr>
@@ -1442,7 +1443,7 @@ function delCookie(name)//删除cookie
       <table  class="table-bordered"  width="600px">
     　<thead>
     　　<tr>
-    　　　<td>ID</td><td>包名称</td><td hidden="true">合同</td><td hidden="true">包</td><td hidden="true">合同号</td><td>操作</td>
+    　　　<td>ID</td><td>包名称</td><td >合同</td><td >包</td><td >合同号</td><td>操作</td>
     　　</tr>
    　</thead> 
       <tbody id="usepack-list">
@@ -1455,7 +1456,7 @@ function delCookie(name)//删除cookie
   </div>
   </script>
   <script type="text/template" id="usepack-template">
-    　　　<td><%- id %></td><td><%- name %></td><td hidden="true"><%- contact %></td><td hidden="true"><%- pack %></td><td hidden="true"><%- hetongbh %></td><td><button class="usepack_edit" data="<%- id %>">编辑</button><button  class="usepack_delete" data="<%- id %>">删除</button></td>
+    　　　<td><%- id %></td><td><%- Pack.name %></td><td ><%- contact_id %></td><td ><%- pack_id %></td><td ><%- hetongbh %></td><td><button class="usepack_edit">编辑</button><button  class="usepack_delete" >删除</button></td>
   </script>
 <script type="text/template" id="packitem-list-template">
   <div class="container">
