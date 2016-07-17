@@ -40,14 +40,17 @@ models.PackItem.findAll({
   });//then
   });//query
 router.post('/', function(req, res) {
-  models.Item.create({
-    yonghu: req.body.yonghu
-  }).then(function() {
-    res.redirect('/parts');
+  models.PackItem.create( req.body).then(function(packitem) {
+      packitem.getItem().then( function(item){
+            console.log(item);
+            packitem.dataValues["Item"]=item;
+            res.json({data:packitem,message:"create packitem ok"}); 
+            }
+        );
   });
 });//create
 
-router.put('/:contact_id', function(req, res) {
+router.put('/:packitem_id', function(req, res) {
   //console.log(req.body);
   models.PackItem.findById(req.body.id,{
      include: [{
@@ -65,13 +68,16 @@ router.put('/:contact_id', function(req, res) {
   });
 });//update
 
-router.delete('/', function (req, res) {
-  models.Task.create({
-    title: req.body.title,
-    ContactId: req.params.contact_id
-  }).then(function() {
-    res.redirect('/parts');
-  });
+router.delete('/:packitem_id', function (req, res) {
+    console.log("=====:");
+    console.log(req);
+    console.log(req.body);
+    models.PackItem.findById(req.params.packitem_id
+        ).then(function(packitem) {
+          console.log(packitem);
+        packitem.destroy();
+        res.json({data:[],message:"delete packitem ok"}); 
+      });
 });//delete
 
 module.exports = router;
