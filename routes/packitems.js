@@ -47,13 +47,21 @@ router.post('/', function(req, res) {
   });
 });//create
 
-router.put('/', function(req, res) {
-  models.Item.destroy({
-    where: {
-      id: req.params.contact_id
-    }
-  }).then(function() {
-    res.redirect('/parts');
+router.put('/:contact_id', function(req, res) {
+  //console.log(req.body);
+  models.PackItem.findById(req.body.id,{
+     include: [{
+                  model: models.Item,
+             }] ,
+  }
+    ).then(function(packitem) {
+    console.log("==============================");
+    console.log(packitem);
+    packitem.update(req.body);
+    packitem.Item.save();
+    packitem.save();
+    console.log(packitem);
+    res.json({data:packitem,message:"update packitem ok"}); 
   });
 });//update
 

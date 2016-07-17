@@ -25,13 +25,11 @@ router.post('/', function(req, res) {
   });
 });//create
 
-router.put('/', function(req, res) {
-  models.Item.destroy({
-    where: {
-      id: req.params.contact_id
-    }
-  }).then(function() {
-    res.redirect('/parts');
+router.put('/:contact_id', function(req, res) {
+  //console.log(req.body);
+  models.Item.findById(req.body.id).then(function(packitem) {
+    packitem.update(req.body);
+    packitem.save();
   });
 });//update
 

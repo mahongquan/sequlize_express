@@ -166,7 +166,7 @@ function delCookie(name)//删除cookie
     urlRoot : "/rest/PackItem/",
     defaults: function() {
       return {
-        id:undefined,name:'',itemid:undefined,ct:0,pack:undefined,guige:'',danwei:'',bh:''
+        id:undefined,pack_id:undefined,item_id:undefined,ct:0,item:undefined
       };
     }
   });
@@ -1109,34 +1109,19 @@ function delCookie(name)//删除cookie
        "click #bt_save_item" : "save",
     },
     save:function(){
+      var item={};
+      var item_vs=this.$(".item");
+      for(var i=0;i<item_vs.length;i++){
+        console.log($(item_vs[i]).attr("id"))
+        item[$(item_vs[i]).attr("id")]=$(item_vs[i]).val();
+      }
       var data={};
-      for(var fname in this.model.attributes){
-           if(fname!="id"){
-                      var value=this.$("#"+fname).val();
-                      if (value) {
-                        var node=this.$("#"+fname);
-                        if(node.attr("type")=="checkbox")
-                        {
-                            data[fname]=node[0].checked;
-                        }
-                        else
-                        {
-                         data[fname]=value;
-                        }//else
-                       }//if
-           }
-       }//for
-       //save Item///////////////////////
-       var item=new Item();
-       item.set(data);
-       item.set({id:data["itemid"]});
-       item.save(null,{
-        success:function(context, model, resp, options){
-          //console.log(options);
-          //console.log("item save finish");
-        }
-      }); 
-       //save PackItem///////////////////////
+      var packitem_vs=this.$(".packitem");
+      for(var i=0;i<packitem_vs.length;i++){
+        console.log($(packitem_vs[i]).attr("id"))
+        data[$(packitem_vs[i]).attr("id")]=$(packitem_vs[i]).val();
+      }
+      this.model.set({Item:item});
       this.model.set(data);
       var self=this;
       this.model.save(null,{
@@ -1443,7 +1428,7 @@ function delCookie(name)//删除cookie
   </script>
 <!--   //{"itemid": 44, "ct": 1, "name": "镍箔", "pack": 111, "id": 1147}, -->
   <script type="text/template" id="packitem-template">
-    　　　<td><%- id %></td><td><%- Item.bh %></td><td><%- Item.name %></td><td><%- Item.guige %></td><td><%- ct %><%- Item.danwei %></td><td hidden="true"><%- pack %></td><td hidden="true"><%- itemid %></td><td><button class="packitem_edit" data="<%- id %>">编辑</button><button  class="packitem_delete" data="<%- id %>">删除</button></td>
+    　　　<td><%- id %></td><td><%- Item.bh %></td><td><%- Item.name %></td><td><%- Item.guige %></td><td><%- ct %><%- Item.danwei %></td><td hidden="true"><%- pack_id %></td><td hidden="true"><%- item_id %></td><td><button class="packitem_edit" data="<%- id %>">编辑</button><button  class="packitem_delete" data="<%- id %>">删除</button></td>
   </script>
     <script type="text/template" id="packitem-edit-template">
     <table  class="table-condensed" >
@@ -1452,7 +1437,7 @@ function delCookie(name)//删除cookie
                     <label>ID:</label>
                 </td>
                 <td>
-                    <input type="text" id="id" name="id" readonly="true"      value="<%- id %>">
+                    <input type="text" id="id" readonly="true"      value="<%- id %>">
                 </td>
             </tr>
              <tr>
@@ -1460,7 +1445,7 @@ function delCookie(name)//删除cookie
                     <label>备件id:</label>
                 </td>
                 <td>
-                    <input type="text" id="itemid" name="itemid" readonly="true"      value="<%- Item.id %>">
+                    <input type="text" id="id"  class="item" readonly="true"      value="<%- Item.id %>">
                 </td>
             </tr>
             <tr>
@@ -1468,7 +1453,7 @@ function delCookie(name)//删除cookie
                     <label>编号:</label>
                 </td>
                 <td>
-                    <input type="text" id="bh" name="bh" value="<%- Item.bh %>">
+                    <input type="text" id="bh" class="item" value="<%- Item.bh %>">
                 </td>
             </tr>       
             <tr>
@@ -1476,7 +1461,7 @@ function delCookie(name)//删除cookie
                     <label>名称:</label>
                 </td>
                 <td>
-                    <input type="text" id="name" name="name" value="<%- Item.name %>">
+                    <input type="text" id="name"  class="item"  value="<%- Item.name %>">
                 </td>
             </tr>        
             <tr>
@@ -1484,7 +1469,7 @@ function delCookie(name)//删除cookie
                     <label>规格:</label>
                 </td>
                 <td>
-                    <input type="text" id="guige" name="guige" value="<%- Item.guige %>">
+                    <input type="text" id="guige"  class="item"   value="<%- Item.guige %>">
                 </td>
             </tr>        
             <tr>
@@ -1492,7 +1477,7 @@ function delCookie(name)//删除cookie
                     <label>单位:</label>
                 </td>
                 <td>
-                    <input type="text" id="danwei" name="danwei" value="<%- Item.danwei %>">
+                    <input type="text" id="danwei"  class="item"  value="<%- Item.danwei %>">
                 </td>
             </tr>        
             <tr>
@@ -1500,7 +1485,7 @@ function delCookie(name)//删除cookie
                     <label>数量:</label>
                 </td>
                 <td>
-                    <input type="text" id="ct" name="ct" value="<%- ct %>">
+                    <input type="text" id="ct"  class="packitem"  value="<%- ct %>">
                 </td>
             </tr>        
             </table>

@@ -46,16 +46,12 @@ router.post('/create', function(req, res) {
 });
 
 router.put('/:contact_id', function(req, res) {
-  console.log(req.body);
-  var data=req.body;
-  console.log(data);
-  // models.Item.destroy({
-  //   where: {
-  //     id: req.params.contact_id
-  //   }
-  // }).then(function() {
-  //   res.redirect('/parts');
-  // });
+  //console.log(req.body);
+  models.Item.findById(req.body.id).then(function(packitem) {
+    packitem.update(req.body);
+    packitem.save();
+    res.json({data:packitem,message:"update item ok"}); 
+  });
 });//update
 
 router.post('/:contact_id/tasks/create', function (req, res) {
