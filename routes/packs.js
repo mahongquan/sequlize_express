@@ -36,11 +36,9 @@ router.get('/', function(req, res) {
       });//then
   });//then
 });
-router.post('/create', function(req, res) {
-  models.Contact.create({
-    yonghu: req.body.yonghu
-  }).then(function() {
-    res.redirect('/parts');
+router.post('/', function(req, res) {
+  models.Pack.create( req.body).then(function(data) {
+    res.json({data:data,message:"create pack ok"}); 
   });
 });
 

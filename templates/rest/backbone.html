@@ -141,7 +141,7 @@ function delCookie(name)//删除cookie
     urlRoot : "/rest/UsePack/",
     defaults: function() {
       return {
-        id:undefined,name:'',contact:undefined,pack:undefined,hetongbh:""
+        id:undefined,contact_id:undefined,pack_id:undefined,Pack:undefined
       };
     }
   });
@@ -842,7 +842,7 @@ function delCookie(name)//删除cookie
       //console.log(value);
       var p=new UsePack();
       var self=this;
-      p.set({contact:this.model.get("id"),name:value,pack:pk});
+      p.set({contact_id:this.model.get("id"),pack_id:pk});
       p.save(null,{
         success:function(context, model, resp, options){
           //console.log(options);

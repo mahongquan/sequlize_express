@@ -29,13 +29,16 @@ models.UsePack.findAll({
       });//then
   });//then
 });
-router.post('/create', function(req, res) {
-  models.Contact.create({
-    yonghu: req.body.yonghu
-  }).then(function() {
-    res.redirect('/parts');
+router.post('/', function(req, res) {
+  models.UsePack.create( req.body).then(function(packitem) {
+      packitem.getPack().then( function(item){
+            console.log(item);
+            packitem.dataValues["Pack"]=item;
+            res.json({data:packitem,message:"create UsePack ok"}); 
+            }
+        );
   });
-});
+});//create
 
 router.get('/:contact_id/destroy', function(req, res) {
   models.Contact.destroy({
@@ -56,15 +59,17 @@ router.post('/:contact_id/tasks/create', function (req, res) {
   });
 });
 
-router.get('/:contact_id/tasks/:task_id/destroy', function (req, res) {
-  models.Task.destroy({
-    where: {
-      id: req.params.task_id
-    }
-  }).then(function() {
-    res.redirect('/parts');
-  });
-});
+router.delete('/:packitem_id', function (req, res) {
+    console.log("=====:");
+    console.log(req);
+    console.log(req.body);
+    models.UsePack.findById(req.params.packitem_id
+        ).then(function(packitem) {
+          console.log(packitem);
+        packitem.destroy();
+        res.json({data:[],message:"delete packitem ok"}); 
+      });
+});//delete
 
 
 module.exports = router;
