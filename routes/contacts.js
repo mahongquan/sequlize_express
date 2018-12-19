@@ -50,7 +50,7 @@ router.get('/', function(req, res) {
       var total=datas[0].dataValues.total;
       console.log("total="+total);
       models.Contact.findAll({
-        where: w,limit: limit,offset:start,order:'yujifahuo_date DESC'
+        where: w,limit: limit,offset:start,order:[["yujifahuo_date",'DESC']]
       }
       ).then(function(contacts) {
         if(contacts.length>0){
