@@ -5,9 +5,12 @@ module.exports = function(sequelize, DataTypes) {
      pack_id:DataTypes.INTEGER,// models.CharField(max_length=30,verbose_name="用户单位")#用户单位
      item_id:DataTypes.INTEGER,
      ct:DataTypes.INTEGER,
+     quehuo:DataTypes.BOOLEAN,
   }, {
-    classMethods: {
-      associate: function(models) {
+    timestamps: false,
+    tableName: 'parts_packitem'
+  });
+      PackItem.associate=function(models) {
         PackItem.belongsTo(models.Item,{
           foreignKey:"item_id"
         })
@@ -15,10 +18,5 @@ module.exports = function(sequelize, DataTypes) {
           foreignKey:"item_id"
         })
       }
-    },
-    timestamps: false,
-    tableName: 'parts_packitem'
-  });
-
   return PackItem;
 };

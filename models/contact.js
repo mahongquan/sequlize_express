@@ -18,14 +18,6 @@ module.exports = function(sequelize, DataTypes) {
     // date_joined: DataTypes.DATE
   }, {
     underscored: true,
-    classMethods: {
-      associate: function(models) {
-        Contact.hasMany(models.UsePack,{
-              //foreignKey: 'contact_id',
-              as:'usepacks'
-        })
-      }
-    },
     timestamps: false,
     tableName: 'parts_contact'
   });

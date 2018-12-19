@@ -18,14 +18,6 @@ module.exports = function(sequelize, DataTypes) {
      beizhu:DataTypes.STRING,// =  models.CharField(max_length=30,verbose_name="包箱")#包箱
      image:DataTypes.STRING
   }, {
-classMethods: {
-      associate: function(models) {
-        Item.hasMany(models.PackItem,{
-              foreignKey: 'item_id',
-              as:'packitems'
-        })
-      }
-    },
     timestamps: false,
     tableName: 'parts_item'
   });
