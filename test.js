@@ -2,6 +2,7 @@
 
 //var debug = require('debug')('express-example');
 //var app = require('../app');
+const { Op } = require("sequelize");
 var models = require("./models");
 //app.set('port', process.env.PORT || 8000);
 models.sequelize.sync().then(function () {
@@ -11,7 +12,7 @@ models.sequelize.sync().then(function () {
     //     console.log(datas.length);
     // });
     //models.Item.create({name:"test",ct:1,danwei:"个"});
-    models.Item.findById(123).then(function(project) {
+    models.Item.findByPk(123).then(function(project) {
         // project will be an instance of Project and stores the content of the table entry
         // with id 123. if such an entry is not defined you will get null
         console.log(project.dataValues);
@@ -19,7 +20,7 @@ models.sequelize.sync().then(function () {
     models.Item.findAndCountAll({
      where: {
         name: {
-          $like: '1%'
+          [Op.like]: 'YSBC%'
         }
      },
      offset: 10,
@@ -27,6 +28,6 @@ models.sequelize.sync().then(function () {
   })
   .then(function(result) {
     console.log(result.count);
-    console.log(result.rows);
+    // console.log(result.rows);
   });
 });

@@ -11,7 +11,7 @@ models.sequelize.sync().then(function () {
     //     console.log(datas.length);
     // });
     //models.Item.create({name:"test",ct:1,danwei:"个"});
-    models.Contact.findById(119).then(function(contact) {
+    models.Contact.findByPk(119).then(function(contact) {
         // project will be an instance of Project and stores the content of the table entry
         // with id 123. if such an entry is not defined you will get null
         //console.dir(project);

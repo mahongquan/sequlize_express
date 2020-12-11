@@ -1,7 +1,9 @@
 var models  = require('../models');
 var express = require('express');
+const { Op } = require("sequelize");
 var router  = express.Router();
 router.get('/', function(req, res) {
+  console.log("contacts get")
   console.log(req.query);
   var start=req.query.start;
   var limit=req.query.limit;
@@ -14,18 +16,18 @@ router.get('/', function(req, res) {
   if (search!=""){
       if(baoxiang!=""){
           w={
-            $or:{
-              yiqibh:{$like:"%"+search+"%"},
-              hetongbh:{$like:"%"+search+"%"},
+            [Op.or]:{
+              yiqibh:{[Op.like]:"%"+search+"%"},
+              hetongbh:{[Op.like]:"%"+search+"%"},
             },
-            baoxiang:{$like:"%"+baoxiang+"%"}
+            baoxiang:{[Op.like]:"%"+baoxiang+"%"}
           };
       }
       else{
           w={
-            $or:{
-              yiqibh:{$like:"%"+search+"%"},
-              hetongbh:{$like:"%"+search+"%"},
+            [Op.or]:{
+              yiqibh:{[Op.like]:"%"+search+"%"},
+              hetongbh:{[Op.like]:"%"+search+"%"},
             }
           };
       }
@@ -34,7 +36,7 @@ router.get('/', function(req, res) {
   {
       if(baoxiang!=""){
           w={
-            baoxiang:{$like:"%"+baoxiang+"%"}
+            baoxiang:{[Op.like]:"%"+baoxiang+"%"}
           };
       }
       else{
@@ -42,7 +44,7 @@ router.get('/', function(req, res) {
       }
   }
   console.log(w);
-  //console.log(models.sequelize);
+  console.log(models.Contact);
   models.Contact.findAll({
     attributes: [ [models.sequelize.fn('COUNT', models.sequelize.col('id')), 'total'], ],
     where: w
