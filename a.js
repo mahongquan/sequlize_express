@@ -1,3 +1,5 @@
+
+
 var models = require("./models");
 models.sequelize.sync().then(function () {
     var Player = models.sequelize.define('player', {name :models.Sequelize.STRING})
